@@ -3,17 +3,18 @@ package subscriber
 import (
 	"context"
 	log "github.com/micro/go-micro/v2/logger"
-	service1 "service1/proto/service1"
+
+	service2 "service2/proto/service2"
 )
 
-type Service1 struct{}
+type Service2 struct{}
 
-func (e *Service1) Handle(ctx context.Context, msg *service1.Message) error {
+func (e *Service2) Handle(ctx context.Context, msg *service2.Message) error {
 	log.Info("Handler Received message: ", msg.Say)
 	return nil
 }
 
-func Handler(ctx context.Context, msg *service1.Message) error {
+func Handler(ctx context.Context, msg *service2.Message) error {
 	log.Info("Function Received message: ", msg.Say)
 	return nil
 }
