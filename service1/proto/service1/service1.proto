@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package go.micro.api.service1;
+
+service Service1 {
+	rpc Json(Empty) returns (Response);
+}
+
+message Empty {}
+
+message Message {
+	string say = 1;
+}
+
+message Packet {
+	string datetime = 1;
+	float temp1 = 2;
+	float temp2 = 3;
+	float height = 4;
+	float latitude = 5;
+	float logitude = 6;
+	int32 status = 7;
+}
+
+message Response {
+	string serialNum = 1;
+	Packet packet = 2;
+}
