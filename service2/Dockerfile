@@ -7,11 +7,11 @@ RUN apk update && \
 WORKDIR /github.com/egsam98/microservice
 COPY . .
 ENV GO111MODULE=on
-RUN CGO_ENABLED=0 go build -o service1-service *.go
+RUN CGO_ENABLED=0 go build -o service2-service *.go
 
 
 FROM scratch
 
-COPY --from=builder /github.com/egsam98/microservice/service1-service .
+COPY --from=builder /github.com/egsam98/microservice/service2-service .
 EXPOSE 8080
-ENTRYPOINT ["./service1-service"]
+ENTRYPOINT ["./service2-service"]

@@ -2,8 +2,7 @@ package handler
 
 import (
 	"context"
-	service1 "service1/proto/service1"
-
+	service1 "github.com/egsam98/microservice/service1/proto/service1"
 	"time"
 )
 

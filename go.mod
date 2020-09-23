@@ -1,4 +1,4 @@
-module microservice
+module github.com/egsam98/microservice
 
 go 1.14
 
