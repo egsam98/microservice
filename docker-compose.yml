@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  microservice_builder:
+    image: microservice_builder:latest
+    container_name: microservice_builder
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  service1:
+    image: service1:latest
+    container_name: service1
+    ports:
+      - "50000:50000"
+    environment:
+      - MICRO_SERVER_ADDRESS=:50000
+    build:
+      context: .
+      dockerfile: ./service1/Dockerfile
+    depends_on:
+      - microservice_builder
+
+  service2:
+    image: service2:latest
+    container_name: service2
+    ports:
+      - "50001:50001"
+    environment:
+      - MICRO_SERVER_ADDRESS=:50001
+      - LATENCY_SEC=5
+      - TOPIC_NAME=messages
+    build:
+      context: .
+      dockerfile: ./service2/Dockerfile
+    depends_on:
+      - microservice_builder

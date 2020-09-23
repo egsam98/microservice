@@ -11,7 +11,7 @@ proto:
 .PHONY: build
 build: proto
 
-	go build -o service1-service *.go
+	go build -o service1 *.go
 
 .PHONY: test
 test:
@@ -19,4 +19,4 @@ test:
 
 .PHONY: docker
 docker:
-	docker build . -t service1-service:latest
+	docker build . -t service1:latest

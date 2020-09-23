@@ -1,17 +1,7 @@
-FROM golang:alpine as builder
-
-RUN apk update && \
-    apk add build-base && \
-    apk add --no-cache git
-
-WORKDIR /github.com/egsam98/microservice
-COPY . .
-ENV GO111MODULE=on
-RUN CGO_ENABLED=0 go build -o service1-service *.go
+FROM microservice_builder:latest as builder
+RUN CGO_ENABLED=0 go build -o bin/service1 service1/*.go
 
 
 FROM scratch
-
-COPY --from=builder /github.com/egsam98/microservice/service1-service .
-EXPOSE 8080
-ENTRYPOINT ["./service1-service"]
+COPY --from=builder /github.com/egsam98/microservice/bin/service1 .
+ENTRYPOINT ["./service1"]

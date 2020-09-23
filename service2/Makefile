@@ -4,7 +4,7 @@ GOPATH:=$(shell go env GOPATH)
 .PHONY: build
 build:
 
-	go build -o service2-service *.go
+	go build -o service2 *.go
 
 .PHONY: test
 test:
@@ -12,4 +12,4 @@ test:
 
 .PHONY: docker
 docker:
-	docker build . -t service2-service:latest
+	docker build . -t service2:latest
