@@ -28,10 +28,25 @@ services:
       - "50001:50001"
     environment:
       - MICRO_SERVER_ADDRESS=:50001
-      - LATENCY_SEC=5
+      - LATENCY_SEC=10
       - TOPIC_NAME=messages
     build:
       context: .
       dockerfile: ./service2/Dockerfile
+    depends_on:
+      - microservice_builder
+
+  service3:
+    image: service3:latest
+    container_name: service3
+    ports:
+      - "50002:50002"
+    environment:
+      - MICRO_SERVER_ADDRESS=:50002
+      - TOPIC_NAME=messages
+      - SQLITE_DATABASE=database.db
+    build:
+      context: .
+      dockerfile: ./service3/Dockerfile
     depends_on:
       - microservice_builder

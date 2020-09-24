@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package go.micro.service.service3;
+
+service Service3 {
+	rpc Telemetry(SerialNum) returns (Response);
+}
+
+message SerialNum {
+	string value = 1;
+}
+
+message Values {
+	float temp1 = 2;
+	float temp2 = 3;
+	float height = 4;
+	float latitude = 5;
+	float logitude = 6;
+	int32 status = 7;
+}
+
+message Response {
+	int64 ts = 1;
+	Values values = 2;
+}

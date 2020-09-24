@@ -8,12 +8,11 @@ import (
 )
 
 var DB *sql.DB
-var InsertToResponsesStmt *sql.Stmt
 
 const CreateTableQuery = `
 CREATE TABLE IF NOT EXISTS responses (
 	serial_num INTEGER,
-	date_time TIMESTAMP,
+	date_time TEXT,
 	temp1 REAL,
 	temp2 REAL,
 	height REAL,
@@ -37,11 +36,6 @@ func Init(sqliteDatabase string) (err error) {
 	if err != nil {
 		return err
 	}
-
-	InsertToResponsesStmt, _ = DB.Prepare(`
-		INSERT INTO responses (serial_num, date_time, temp1, temp2, height, latitude, logitude, status)
-		VALUES(?, ?, ?, ?, ?, ?, ?, ?)
-	`)
 
 	fmt.Printf("Database \"%s\" is set\n", sqliteDatabase)
 	return nil
