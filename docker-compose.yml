@@ -1,12 +1,26 @@
 version: '3.8'
 
 services:
+  nats:
+    image: nats:2.0.0
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    command:
+      - "-DV"
+    networks:
+      - lan
+    restart: always
+
   microservice_builder:
     image: microservice_builder:latest
     container_name: microservice_builder
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - nats
 
   service1:
     image: service1:latest
@@ -20,6 +34,8 @@ services:
       dockerfile: ./service1/Dockerfile
     depends_on:
       - microservice_builder
+    networks:
+      - lan
 
   service2:
     image: service2:latest
@@ -28,6 +44,8 @@ services:
       - "50001:50001"
     environment:
       - MICRO_SERVER_ADDRESS=:50001
+      - MICRO_BROKER=nats
+      - MICRO_BROKER_ADDRESS=nats:4222
       - LATENCY_SEC=10
       - TOPIC_NAME=messages
     build:
@@ -35,6 +53,8 @@ services:
       dockerfile: ./service2/Dockerfile
     depends_on:
       - microservice_builder
+    networks:
+      - lan
 
   service3:
     image: service3:latest
@@ -43,6 +63,8 @@ services:
       - "50002:50002"
     environment:
       - MICRO_SERVER_ADDRESS=:50002
+      - MICRO_BROKER=nats
+      - MICRO_BROKER_ADDRESS=nats:4222
       - TOPIC_NAME=messages
       - SQLITE_DATABASE=database.db
     build:
@@ -50,3 +72,9 @@ services:
       dockerfile: ./service3/Dockerfile
     depends_on:
       - microservice_builder
+    networks:
+      - lan
+
+networks:
+  lan:
+    driver: bridge
